@@ -7,7 +7,8 @@ namespace ObjectOrientedRPS
 {
     class Game
     {
-        string[] playerChoices = { "Rock", "Paper", "Scissors" }; 
+        string[] playerChoices = { "Rock", "Paper", "Scissors" };
+        string userChoice = null;
 
         public Game()
         {
@@ -17,25 +18,25 @@ namespace ObjectOrientedRPS
 
         private void Introduction()
         {
-            string instructionsNeeded = null;
-
-            while (instructionsNeeded != "Y" && instructionsNeeded != "N" && instructionsNeeded != "YES" && instructionsNeeded != "NO")
+            var validator = new YesNoValidation();
+            while (!validator.Validate(new UserChoice(userChoice)).IsValid)
             {
                 Console.WriteLine("Welcome to Rock, Paper, Scissors!");
                 Console.WriteLine("\nDo you need to read the instructions?");
                 string instructions = Console.ReadLine();
-                instructionsNeeded = instructions.ToUpper();
-                if (instructionsNeeded != "Y" && instructionsNeeded != "N" && instructionsNeeded != "YES" && instructionsNeeded != "NO")
+                userChoice = instructions.ToUpper();
+                if (userChoice != "Y" && userChoice != "N" && userChoice != "YES" && userChoice != "NO")
                 {
                     Console.WriteLine("\nPlease choose either \"Yes\" or \"No\".");
                     Console.WriteLine("\n******************************");
                 }
 
-                if (instructionsNeeded == "Y" || instructionsNeeded == "YES")
+                if (userChoice == "Y" || userChoice == "YES")
                 {
                     this.Instructions();
                 }
             }
+            this.ClearUserChoice();
         }
 
         private void Instructions()
@@ -55,6 +56,7 @@ namespace ObjectOrientedRPS
                 }
 
                 instructions.Close();
+                this.ClearUserChoice();
                 Console.ReadKey();
             }
             catch(Exception e)
@@ -65,21 +67,21 @@ namespace ObjectOrientedRPS
 
         private void BestOf()
         {
-            string bestOf = null;
             uint bestOfCounter = 1;
 
-            while (bestOf != "Y" || bestOf != "YES" || bestOf != "N" || bestOf != "NO")
+            var validator = new YesNoValidation();
+            while (!validator.Validate(new UserChoice(userChoice)).IsValid)
             {
                 Console.WriteLine("\nWould you like to play a \"best-of\" match?");
                 string yesNo = Console.ReadLine();
-                bestOf = yesNo.ToUpper();
-                if (bestOf != "Y" && bestOf != "N" && bestOf != "YES" && bestOf != "NO")
+                userChoice = yesNo.ToUpper();
+                if (userChoice != "Y" && userChoice != "N" && userChoice != "YES" && userChoice != "NO")
                 {
                     Console.WriteLine("\nNot a valid input, try again.");
                     Console.WriteLine("******************************");
                 }
             }
-            if (bestOf == "Y" || bestOf == "YES")
+            if (userChoice == "Y" || userChoice == "YES")
             {
                 Console.WriteLine("How many rounds do you want to play?");
                 while (!uint.TryParse(Console.ReadLine(), out bestOfCounter))
@@ -88,6 +90,11 @@ namespace ObjectOrientedRPS
                     Console.WriteLine("The number must be positive.\n");
                 }
             }
+        }
+
+        private void ClearUserChoice()
+        {
+            userChoice = null;
         }
     }
 }
