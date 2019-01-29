@@ -12,6 +12,7 @@ namespace ObjectOrientedRPS
 
         public Game()
         {
+            Console.WriteLine("Welcome to Rock, Paper, Scissors!");
             this.Introduction();
             this.BestOf();
         }
@@ -21,19 +22,19 @@ namespace ObjectOrientedRPS
             var validator = new YesNoValidation();
             while (!validator.Validate(new UserChoice(userChoice)).IsValid)
             {
-                Console.WriteLine("Welcome to Rock, Paper, Scissors!");
                 Console.WriteLine("\nDo you need to read the instructions?");
                 string instructions = Console.ReadLine();
                 userChoice = instructions.ToUpper();
-                if (userChoice != "Y" && userChoice != "N" && userChoice != "YES" && userChoice != "NO")
+                if (!validator.Validate(new UserChoice(userChoice)).IsValid)
                 {
                     Console.WriteLine("\nPlease choose either \"Yes\" or \"No\".");
-                    Console.WriteLine("\n******************************");
                 }
 
-                if (userChoice == "Y" || userChoice == "YES")
+                var yesValidator = new YesValidation();
+                if (yesValidator.Validate(new UserChoice(userChoice)).IsValid)
                 {
                     this.Instructions();
+                    break;
                 }
             }
             this.ClearUserChoice();
@@ -75,13 +76,14 @@ namespace ObjectOrientedRPS
                 Console.WriteLine("\nWould you like to play a \"best-of\" match?");
                 string yesNo = Console.ReadLine();
                 userChoice = yesNo.ToUpper();
-                if (userChoice != "Y" && userChoice != "N" && userChoice != "YES" && userChoice != "NO")
+                if (!validator.Validate(new UserChoice(userChoice)).IsValid)
                 {
                     Console.WriteLine("\nNot a valid input, try again.");
                     Console.WriteLine("******************************");
                 }
             }
-            if (userChoice == "Y" || userChoice == "YES")
+            var yesValidator = new YesValidation();
+            if (yesValidator.Validate(new UserChoice(userChoice)).IsValid)
             {
                 Console.WriteLine("How many rounds do you want to play?");
                 while (!uint.TryParse(Console.ReadLine(), out bestOfCounter))
@@ -90,6 +92,7 @@ namespace ObjectOrientedRPS
                     Console.WriteLine("The number must be positive.\n");
                 }
             }
+            this.ClearUserChoice();
         }
 
         private void ClearUserChoice()
