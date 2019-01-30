@@ -13,9 +13,9 @@ namespace ObjectOrientedRPS
         }
     }
 
-    class YesNoValidation : AbstractValidator<UserChoice>
+    class YesNoValidator : AbstractValidator<UserChoice>
     {
-        public YesNoValidation()
+        public YesNoValidator()
         {
             RuleFor(x => x.choice).Must(BeAValidYesOrNo);
         }
@@ -27,9 +27,9 @@ namespace ObjectOrientedRPS
         }
     }
 
-    class YesValidation : AbstractValidator<UserChoice>
+    class YesValidator : AbstractValidator<UserChoice>
     {
-        public YesValidation()
+        public YesValidator()
         {
             RuleFor(x => x.choice).Must(BeAValidYes);
         }
@@ -41,9 +41,9 @@ namespace ObjectOrientedRPS
         }
     }
 
-    class NoValidation : AbstractValidator<UserChoice>
+    class NoValidator : AbstractValidator<UserChoice>
     {
-        public NoValidation()
+        public NoValidator()
         {
             RuleFor(x => x.choice).Must(BeAValidNo);
         }

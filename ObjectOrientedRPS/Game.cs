@@ -8,18 +8,19 @@ namespace ObjectOrientedRPS
     class Game
     {
         string[] playerChoices = { "Rock", "Paper", "Scissors" };
-        string userChoice = null;
+        private string userChoice = null;
 
         public Game()
         {
             Console.WriteLine("Welcome to Rock, Paper, Scissors!");
             this.Introduction();
             this.BestOf();
+            this.PlayGame();
         }
 
         private void Introduction()
         {
-            var validator = new YesNoValidation();
+            var validator = new YesNoValidator();
             while (!validator.Validate(new UserChoice(userChoice)).IsValid)
             {
                 Console.WriteLine("\nDo you need to read the instructions?");
@@ -30,7 +31,7 @@ namespace ObjectOrientedRPS
                     Console.WriteLine("\nPlease choose either \"Yes\" or \"No\".");
                 }
 
-                var yesValidator = new YesValidation();
+                var yesValidator = new YesValidator();
                 if (yesValidator.Validate(new UserChoice(userChoice)).IsValid)
                 {
                     this.Instructions();
@@ -70,7 +71,7 @@ namespace ObjectOrientedRPS
         {
             uint bestOfCounter = 1;
 
-            var validator = new YesNoValidation();
+            var validator = new YesNoValidator();
             while (!validator.Validate(new UserChoice(userChoice)).IsValid)
             {
                 Console.WriteLine("\nWould you like to play a \"best-of\" match?");
@@ -79,10 +80,9 @@ namespace ObjectOrientedRPS
                 if (!validator.Validate(new UserChoice(userChoice)).IsValid)
                 {
                     Console.WriteLine("\nNot a valid input, try again.");
-                    Console.WriteLine("******************************");
                 }
             }
-            var yesValidator = new YesValidation();
+            var yesValidator = new YesValidator();
             if (yesValidator.Validate(new UserChoice(userChoice)).IsValid)
             {
                 Console.WriteLine("How many rounds do you want to play?");
@@ -90,9 +90,20 @@ namespace ObjectOrientedRPS
                 {
                     Console.WriteLine("Please enter a number.");
                     Console.WriteLine("The number must be positive.\n");
+                    this.RoundCounter();
                 }
             }
             this.ClearUserChoice();
+        }
+
+        private void RoundCounter()
+        {
+
+        }
+
+        private void PlayGame()
+        {
+
         }
 
         private void ClearUserChoice()
