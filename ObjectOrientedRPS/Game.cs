@@ -9,17 +9,18 @@ namespace ObjectOrientedRPS
     {
         string[] playerChoices = { "Rock", "Paper", "Scissors" };
         private string userChoice = null;
+        uint bestOfCounter = 1;
 
         public Game()
         {
-            Console.WriteLine("Welcome to Rock, Paper, Scissors!");
             this.Introduction();
             this.BestOf();
-            this.PlayGame();
+
         }
 
         private void Introduction()
         {
+            Console.WriteLine("Welcome to Rock, Paper, Scissors!");
             var validator = new YesNoValidator();
             while (!validator.Validate(new UserChoice(userChoice)).IsValid)
             {
@@ -69,8 +70,6 @@ namespace ObjectOrientedRPS
 
         private void BestOf()
         {
-            uint bestOfCounter = 1;
-
             var validator = new YesNoValidator();
             while (!validator.Validate(new UserChoice(userChoice)).IsValid)
             {
@@ -86,7 +85,7 @@ namespace ObjectOrientedRPS
             if (yesValidator.Validate(new UserChoice(userChoice)).IsValid)
             {
                 Console.WriteLine("How many rounds do you want to play?");
-                while (!uint.TryParse(Console.ReadLine(), out bestOfCounter))
+                while (!uint.TryParse(Console.ReadLine(), out this.bestOfCounter))
                 {
                     Console.WriteLine("Please enter a number.");
                     Console.WriteLine("The number must be positive.\n");
@@ -101,7 +100,7 @@ namespace ObjectOrientedRPS
 
         }
 
-        private void PlayGame()
+        public void PlayGame()
         {
 
         }
