@@ -22,7 +22,7 @@ namespace ObjectOrientedRPS
 
         private bool BeAValidYesOrNo(string choice)
         {
-            var yesOrNo = new List<string> { "Yes", "No", "Y", "N" };
+            var yesOrNo = new List<string> { "YES", "NO", "Y", "N" };
             return yesOrNo.Contains(choice);
         }
     }
@@ -36,7 +36,7 @@ namespace ObjectOrientedRPS
 
         private bool BeAValidYes(string choice)
         {
-            var yes = new List<string> { "Yes", "Y" };
+            var yes = new List<string> { "YES", "Y" };
             return yes.Contains(choice);
         }
     }
@@ -50,8 +50,64 @@ namespace ObjectOrientedRPS
 
         private bool BeAValidNo(string choice)
         {
-            var no = new List<string> { "No", "N" };
+            var no = new List<string> { "NO", "N" };
             return no.Contains(choice);
         }
     }
+    class RPSValidator : AbstractValidator<UserChoice>
+    {
+        public RPSValidator()
+        {
+            RuleFor(x => x.choice).Must(BeAValidRPS).WithMessage("Please try again with Rock (R), Paper (P), or Scissors (S).");
+        }
+
+        private bool BeAValidRPS(string choice)
+        {
+            var rockPaperScissors = new List<string> { "ROCK", "R", "PAPER", "P", "SCISSORS", "S"};
+            return rockPaperScissors.Contains(choice);
+        }
+    }
+
+    class RockValidator : AbstractValidator<UserChoice>
+    {
+        public RockValidator()
+        {
+            RuleFor(x => x.choice).Must(BeAValidRock);
+        }
+
+        private bool BeAValidRock(string choice)
+        {
+            var rock = new List<string> { "ROCK", "R" };
+            return rock.Contains(choice);
+        }
+    }
+
+    class PaperValidator : AbstractValidator<UserChoice>
+    {
+        public PaperValidator()
+        {
+            RuleFor(x => x.choice).Must(BeAValidPaper);
+        }
+
+        private bool BeAValidPaper(string choice)
+        {
+            var paper = new List<string> { "PAPER", "P" };
+            return paper.Contains(choice);
+        }
+    }
+
+    class ScissorsValidator : AbstractValidator<UserChoice>
+    {
+        public ScissorsValidator()
+        {
+            RuleFor(x => x.choice).Must(BeAValidScissors);
+        }
+
+        private bool BeAValidScissors(string choice)
+        {
+            var scissors = new List<string> { "SCISSORS", "S" };
+            return scissors.Contains(choice);
+        }
+    }
+
 }

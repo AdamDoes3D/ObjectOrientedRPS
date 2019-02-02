@@ -7,7 +7,11 @@ namespace ObjectOrientedRPS
         static void Main(string[] args)
         {
             var game = new Game();
-            game.PlayGame();
+            for (game.roundTicker = 0; game.roundTicker < game.bestOfCounter; game.roundTicker++)
+            {
+                game.PlayGame();
+            }
+            Console.ReadLine();
         }
     }
 }

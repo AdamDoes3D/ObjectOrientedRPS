@@ -7,15 +7,16 @@ namespace ObjectOrientedRPS
 {
     class Game
     {
-        string[] playerChoices = { "Rock", "Paper", "Scissors" };
         private string userChoice = null;
-        uint bestOfCounter = 1;
+        public uint bestOfCounter = 1;
+        public int roundTicker = 0;
+        private int playerWins = 0;
+        private int computerWins = 0;
 
         public Game()
         {
             this.Introduction();
-            this.BestOf();
-
+            this.BestOfRequired();
         }
 
         private void Introduction()
@@ -66,7 +67,7 @@ namespace ObjectOrientedRPS
             }
         }
 
-        private void BestOf()
+        private uint BestOfRequired()
         {
             var yesNoValidator = new YesNoValidator();
             while (!yesNoValidator.Validate(new UserChoice(userChoice)).IsValid)
@@ -85,21 +86,74 @@ namespace ObjectOrientedRPS
                 Console.WriteLine("How many rounds do you want to play?");
                 while (!uint.TryParse(Console.ReadLine(), out this.bestOfCounter))
                 {
-                    Console.WriteLine("Please enter a number.");
-                    Console.WriteLine("The number must be positive.\n");
+                    Console.WriteLine("Please enter a positive number.");
                 }
             }
             this.ClearUserChoice();
-        }
-
-        private void RoundCounter()
-        {
+            return bestOfCounter;
 
         }
 
         public void PlayGame()
         {
+            string playerChoice = null;
+            string[] weapons = { "Rock", "Paper", "Scissors" };
+            int playerWeapon = -1;
 
+            var rockPaperScissorsValidator = new RPSValidator();
+            Console.WriteLine("\n**********************************");
+            while (!rockPaperScissorsValidator.Validate(new UserChoice(playerChoice)).IsValid)
+            {
+                Console.Write("Choose your weapon!  ");
+                playerChoice = Console.ReadLine().ToUpper();
+                if (!rockPaperScissorsValidator.Validate(new UserChoice(playerChoice)).IsValid)
+                {
+                    Console.Write($"\n{playerChoice} is not a valid input.");
+                }
+            }
+
+            var rockValidator = new RockValidator();
+            var paperValidator = new PaperValidator();
+            var scissorsValidator = new ScissorsValidator();
+            if (rockValidator.Validate(new UserChoice(playerChoice)).IsValid)
+            {
+                playerWeapon = 0;
+            }
+                        
+            else if (paperValidator.Validate(new UserChoice(playerChoice)).IsValid)
+            {
+                playerWeapon = 1;
+            }
+                        
+            else if (scissorsValidator.Validate(new UserChoice(playerChoice)).IsValid)
+            {
+                playerWeapon = 2;
+            }
+
+            Console.WriteLine($"You chose: {weapons[playerWeapon]}!");
+            Random choice = new Random();
+            int computerWeapon = choice.Next(3);
+            Console.WriteLine($"I choose: {weapons[computerWeapon]}!");
+            if ((playerWeapon == 0 && computerWeapon == 2) || (playerWeapon == 1 && computerWeapon == 0) || (playerWeapon == 2 && computerWeapon == 1))
+            {
+                Console.WriteLine("\nNice one! That point is yours.");
+                playerWins++;
+                Console.WriteLine($"\nYour score is:" + playerWins);
+                Console.WriteLine($"My score is:" + computerWins);
+                roundTicker++;
+            }
+            else if ((playerWeapon == 0 && computerWeapon == 1) || (playerWeapon == 1 && computerWeapon == 2) || (playerWeapon == 2 && computerWeapon == 0))
+            {
+                Console.WriteLine("\nI'll take that point!");
+                computerWins++;
+                Console.WriteLine($"\nYour score is:" + playerWins);
+                Console.WriteLine($"My score is:" + computerWins + "\n");
+                roundTicker++;
+            }
+            else
+            {
+                Console.WriteLine("\nDarn. It's a tie. \n");
+            }
         }
 
         private void ClearUserChoice()
