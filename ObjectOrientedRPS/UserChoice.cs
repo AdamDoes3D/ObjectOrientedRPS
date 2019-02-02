@@ -17,7 +17,7 @@ namespace ObjectOrientedRPS
     {
         public YesNoValidator()
         {
-            RuleFor(x => x.choice).Must(BeAValidYesOrNo);
+            RuleFor(x => x.choice).Must(BeAValidYesOrNo).WithMessage("Please choose either \"Yes\" or \"No\".");
         } 
 
         private bool BeAValidYesOrNo(string choice)

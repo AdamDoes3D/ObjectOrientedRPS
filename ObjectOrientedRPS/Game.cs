@@ -21,16 +21,15 @@ namespace ObjectOrientedRPS
         private void Introduction()
         {
             Console.WriteLine("Welcome to Rock, Paper, Scissors!");
-            var validator = new YesNoValidator();
-            while (!validator.Validate(new UserChoice(userChoice)).IsValid)
+            var yesNoValidator = new YesNoValidator();
+            while (!yesNoValidator.Validate(new UserChoice(userChoice)).IsValid)
             {
                 Console.WriteLine("\nDo you need to read the instructions?");
                 string instructions = Console.ReadLine();
                 userChoice = instructions.ToUpper();
-                if (!validator.Validate(new UserChoice(userChoice)).IsValid)
-                {
-                    Console.WriteLine("\nPlease choose either \"Yes\" or \"No\".");
-                }
+
+                var message = yesNoValidator.Validate(new UserChoice(userChoice));
+                Console.WriteLine(message);
 
                 var yesValidator = new YesValidator();
                 if (yesValidator.Validate(new UserChoice(userChoice)).IsValid)
@@ -49,7 +48,6 @@ namespace ObjectOrientedRPS
             try
             {
                 StreamReader instructions = new StreamReader("C://Users/Adam/source/repos/ObjectOrientedRPS/ObjectOrientedRPS/obj/Instructions.txt");
-
                 line = instructions.ReadLine();
 
                 while (line != null)
@@ -70,17 +68,17 @@ namespace ObjectOrientedRPS
 
         private void BestOf()
         {
-            var validator = new YesNoValidator();
-            while (!validator.Validate(new UserChoice(userChoice)).IsValid)
+            var yesNoValidator = new YesNoValidator();
+            while (!yesNoValidator.Validate(new UserChoice(userChoice)).IsValid)
             {
                 Console.WriteLine("\nWould you like to play a \"best-of\" match?");
                 string yesNo = Console.ReadLine();
                 userChoice = yesNo.ToUpper();
-                if (!validator.Validate(new UserChoice(userChoice)).IsValid)
-                {
-                    Console.WriteLine("\nNot a valid input, try again.");
-                }
+
+                var message = yesNoValidator.Validate(new UserChoice(userChoice));
+                Console.WriteLine(message);
             }
+
             var yesValidator = new YesValidator();
             if (yesValidator.Validate(new UserChoice(userChoice)).IsValid)
             {
@@ -89,7 +87,6 @@ namespace ObjectOrientedRPS
                 {
                     Console.WriteLine("Please enter a number.");
                     Console.WriteLine("The number must be positive.\n");
-                    this.RoundCounter();
                 }
             }
             this.ClearUserChoice();
