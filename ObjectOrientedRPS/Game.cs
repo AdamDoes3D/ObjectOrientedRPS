@@ -48,7 +48,7 @@ namespace ObjectOrientedRPS
 
             try
             {
-                StreamReader instructions = new StreamReader("C://Users/Adam/source/repos/ObjectOrientedRPS/ObjectOrientedRPS/obj/Instructions.txt");
+                StreamReader instructions = new StreamReader("../../../Instructions.txt");
                 line = instructions.ReadLine();
 
                 while (line != null)

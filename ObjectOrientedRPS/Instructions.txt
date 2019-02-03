@@ -1,0 +1,14 @@
+This game consists of three types of questions.
+
+1. Yes/No questions can be answered with any of the following:
+	Yes can be entered as either "Yes" or "Y"
+	No can be entered as either "No" or "N"
+2. The game may ask you for a number of rounds.  This choice must be a number.
+3. When asked to "Choose your weapon!" you may pick any of the following:
+	"Rock" or "R"
+	"Paper" or "P"
+	"Scissors" or "S"
+
+Don't worry, these choices aren't case-sensitive!
+
+Once you have finished reading the instructions, press any key to continue.
