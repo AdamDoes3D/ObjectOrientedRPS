@@ -156,6 +156,41 @@ namespace ObjectOrientedRPS
             }
         }
 
+        public bool HasWinner()
+        {
+            if (computerWins > bestOfCounter / 2 || playerWins > bestOfCounter / 2)
+            {
+                return true;
+            }
+
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool PlayAgain(string yesNo)
+        {
+            var yesNoValidator = new YesNoValidator();
+            Console.WriteLine("Would you like to play again?  ");
+            while (!yesNoValidator.Validate(new UserChoice(userChoice)).IsValid)
+            {
+                var message = yesNoValidator.Validate(new UserChoice(userChoice));
+                Console.WriteLine(message);
+            }
+
+            if (yesNoValidator.Validate(new UserChoice(userChoice)).IsValid)
+            {
+                return true;
+            }
+
+            else
+            {
+                Console.WriteLine("Thanks for playing!");
+                return false;
+            }
+        }
+
         private void ClearUserChoice()
         {
             userChoice = null;

@@ -7,12 +7,12 @@ namespace ObjectOrientedRPS
         static void Main(string[] args)
         {
             var game = new Game();
-            for (game.roundTicker = 0; game.roundTicker < game.bestOfCounter;)
+            while (game.roundTicker < game.bestOfCounter && !game.HasWinner())
             {
                 game.PlayGame();
             }
 
-            Console.WriteLine("Press Enter to exit the game.");
+            Console.WriteLine("Thanks for playing! \nPress Enter to exit.");
             Console.ReadLine();
         }
     }
